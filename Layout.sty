@@ -1,0 +1,78 @@
+
+\newlength{\homeMargWidth}
+\newlength{\homeColWidth}
+\newlength{\homeSepWidth}
+
+
+%Home page has two columns in the middle, of width homeColWidth where the buttons are located.
+%The margins on the left and right are of width homeMargWidth
+%The seperator in between the columns is of width homeSepWidth
+
+%EDITED: I am not using columns for the home page. Instead, I am using a tikz picture, with the buttons as nodes in the tikzpicture
+
+\setlength{\homeMargWidth}{0.2\linewidth}
+\setlength{\homeColWidth}{0.3\linewidth}
+\setlength{\homeSepWidth}{0.1\linewidth}
+
+%The geometry of the page has been set here. Apparently the "screen" parameter makes the page a good size for screen viewing. "showcrop" is supposed to show the size of the margins (but doesn't seem to be doing that)
+\geometry{margin=\homeMargWidth,screen,centering,showframe,vcentering, headheight = 0pt, top=0pt}
+
+\setbeamercolor{normal text}{fg=bodytext,bg=background}
+\setbeamercolor{header}{fg = bodytext,bg=background}
+
+\beamertemplatenavigationsymbolsempty
+
+
+
+%Here I  define a very adaptable type of button that could be used to hyperlink between frames
+% the command myButton allows me to make a button, with the 6 parameters: destination,text in button, foreground color, background color, height, width
+\newcommand{\myButton}[6]{
+\setbeamertemplate{button}{
+\tikz
+  \usebeamercolor{button},
+  \node[rectangle,
+  minimum width = #5,
+  minimum height = #6,
+ % inner xsep=40pt,
+ % inner ysep=40pt,
+  fill=button.bg]
+{\color{button.fg}\Large\textbf{\insertbuttontext}};
+}
+\setbeamercolor{button}{fg=#3,bg=#4}\hyperlink{#1}{\beamerbutton{#2}}
+}
+
+%Below I set up the return button. The return button uses the GoBack Acrobatmenu button, because that seems to be the only button that can make the user return to the previous page regardless of what the previous page was
+\newcommand{\myReturnButton}{
+\Acrobatmenu{GoBack}{\Large{\textsc{back}}}
+}
+
+\newcommand{\myHomeButton}{
+\hyperlinkdocumentstart{\Large{\textsc{home}}}
+}
+
+\newcommand{\functionButton}[2]{
+\myButton{#1}{#2}{highlighttext}{backgroundhighlights}{160pt}{160pt}
+
+}
+
+\setbeamertemplate{footline}
+{%
+\begin{beamercolorbox}{}
+\begin{center}
+\hskip20pt\myReturnButton   \hspace{0.5in} \myHomeButton\vskip20pt
+\end{center}
+\end{beamercolorbox}%
+}
+
+
+
+
+
+
+%\setbeamercolor{returnbutton}{bg=cyantext,fg=highlighttext
+%\tikz
+%\usebeamercolor{returnbutton},
+%\node[rectangle,minimum width = 50pt,minimum height = 50pt, fill=button.bg]{\color{returnbutton.fg}\Large\textsc{\textbf{back}}}
+%\setbeamercolour{returnbutton}{fg=bluetext,bg=backgroundhighlights}
+
+
